@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de Bord 📅{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css' rel='stylesheet'/>
+    <style>
+        #calendrier {
+            width: 90%;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+
+        .fc-toolbar-title {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #444;
+        }
+
+        .fc-button-primary {
+            background-color: #ff5b5b;
+            border-color: #ff5b5b;
+            color: white;
+        }
+
+        .fc-button-primary:hover {
+            background-color: #ff8b8b;
+            border-color: #ff8b8b;
+        }
+
+        .fc-event {
+            font-size: 0.9em;
+            padding: 2px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>Tableau de Bord</h1>
+    <div id='calendrier'></div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendrierEl = document.getElementById('calendrier');
+
+        var calendrier = new FullCalendar.Calendar(calendrierEl, {
+            locale: 'fr',
+            initialView: 'timeGridWeek',
+            height: 'auto',
+            contentHeight: 600,
+            aspectRatio: 1.8,
+
+            slotMinTime: "08:00:00",
+            slotMaxTime: "20:01:00",
+            slotDuration: "00:30:00",
+            slotLabelInterval: "01:00:00",
+
+            eventOverlap: false,
+            slotEventOverlap: false,
+            eventMaxStack: 3,
+
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'timeGridWeek,timeGridDay'
+            },
+
+            buttonText: {
+                today: 'Aujourd\'hui',
+                week: 'Semaine',
+                day: 'Jour'
+            },
+
+            eventTimeFormat: {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            },
+
+            events: function(fetchInfo, successCallback, failureCallback) {
+                fetch('{{ path('admin_dashboard_events') }}')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Erreur serveur');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const eventsColorisés = data.map(event => ({
+                            ...event,
+                            backgroundColor: event.backgroundColor || '#ff5b5b',
+                            textColor: event.textColor || 'white'
+                        }));
+                        successCallback(eventsColorisés);
+                    })
+                    .catch(error => failureCallback(error));
+            },
+
+            eventClick: function(info) {
+                info.jsEvent.preventDefault();
+
+                const nom = info.event.title;
+                const matiere = info.event.extendedProps.matieres || 'N/A';
+                const debut = info.event.start.toLocaleString('fr-FR');
+                const fin = info.event.end ? info.event.end.toLocaleString('fr-FR') : 'Inconnu';
+
+                Swal.fire({
+                    title: '📋 Détail du Groupe',
+                    html: `
+                        <strong>Nom :</strong> ${nom}<br>
+                        <strong>Matière :</strong> ${matiere}<br>
+                        <strong>Début :</strong> ${debut}<br>
+                        <strong>Fin :</strong> ${fin}<br><br>
+                        Que souhaitez-vous faire ?
+                    `,
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonText: '✏️ Modifier',
+                    cancelButtonText: '❌ Annuler',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = info.event.url;
+                    }
+                });
+            },
+        });
+
+        calendrier.render();
+    });
+</script>
+{% endblock %}

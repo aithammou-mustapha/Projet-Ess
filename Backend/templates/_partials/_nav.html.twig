@@ -1,0 +1,87 @@
+<header class="topbar">
+    <div class="menu-icon">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+
+    <!-- Icône de profil avec menu -->
+    <div class="profile-container" onmouseover="afficherMenuProfil()" onmouseleave="cacherMenuProfil()">
+        <a href="#" class="profile-icon"><img src="{{ asset('assets/img/profil.png') }}" alt="profil"></a>
+        <div class="profile-menu" id="profileMenu">
+            {# <a href="#">Modifier le profil</a>
+            <a href="#">Changer le mot de passe</a> #}
+            {% if app.user %}
+                <a href="{{ path('app_logout') }}">Déconnexion</a>
+            {% endif %}
+        </div>
+    </div>
+
+</header>
+
+<div class="container">
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <a href="{{ path('admin_dashboard_index') }}"><img src="{{ asset('assets/img/logoess.png') }}" alt="logo ESS"></a>
+        </div>
+
+        <div class="sidebar-profile">
+            <a href="#"><img src="{{ asset('assets/img/profil.png') }}" alt="profil"></a>
+        </div>
+
+        {% if app.user %}
+            <div class="user-name">
+                {{ app.user.prenomGerant }} {{ app.user.nomGerant }}
+            </div>
+        {% endif %}
+
+        <ul>
+            <li><a href="{{ path('admin_dashboard_index') }}"> Tableau de Bord</a></li>
+            <li><a href="{{ path('admin_gerant_index') }}">Managers</a></li>
+
+            <li class="submenu">
+                <a href="#">Gestion des Personnes</a>
+                <ul class="dropdown">
+                <li><a href="{{ path('admin_parents_index') }}"> Parents</a></li>
+                <li><a href="{{ path('admin_eleve_index') }}"> Élèves</a></li>
+                <li><a href="{{ path('admin_prof_index') }}"> Professeurs</a></li>
+
+                    
+                </ul>
+            </li>
+
+
+            <li class="submenu">
+                <a href="#">Gestion des Infrastructures</a>
+             <ul class="dropdown">
+                    <li><a href="{{ path('admin_groupe_index') }}">Groupes</a></li>
+                    <li><a href="{{ path('admin_salle_index') }}">Salles</a></li> 
+                    <li><a href="{{ path('admin_centre_index') }}">Centres</a></li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let menuIcon = document.querySelector(".menu-icon"); // Sélection de l'icône du menu
+    let sidebar = document.querySelector(".sidebar"); // Sélection de la barre latérale
+    let topbar = document.querySelector(".topbar"); // Sélection de la barre du haut (topbar)
+    let content = document.querySelector(".content"); // Sélection du contenu principal
+
+    // Vérifie si les éléments existent avant d'ajouter les événements
+    if (menuIcon && sidebar && topbar) {
+        menuIcon.addEventListener("click", function (event) {
+            event.preventDefault(); // Empêche le comportement par défaut du lien
+            sidebar.classList.toggle("hidden"); // Affiche/masque la sidebar
+            topbar.classList.toggle("sidebar-hidden"); // Ajuste la topbar
+            if (content) {
+                content.classList.toggle("sidebar-hidden"); // Ajuste le contenu si présent
+            }
+        });
+    } else {
+        console.error("Erreur : Un élément du menu n'a pas été trouvé.");
+    }
+});
+
+</script>

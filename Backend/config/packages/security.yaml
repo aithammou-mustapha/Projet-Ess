@@ -1,0 +1,51 @@
+security:
+    # 🔐 Configuration du hachage de mot de passe pour les utilisateurs
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+
+    # 👥 Fournisseur d'utilisateurs : ici on utilise l'entité Gerant
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\Gerant
+                property: emailGerant  # 📧 C'est avec ce champ que les gérants vont se connecter
+
+    # 🔥 Définition des différents firewalls (zones de sécurité)
+    firewalls:
+        # 🔧 Firewall pour la partie développement (profiler, debug toolbar, assets)
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false  # ⚠️ Pas de sécurité sur ces routes
+
+        # 🔐 Firewall pour les routes API (React communique ici)
+        api:
+            pattern: ^/api/  # 🎯 Cible toutes les routes commençant par /api/
+            stateless: true  # 🚫 Pas de session pour l'API (important pour éviter l'erreur "session used while stateless")
+            # 🔓 Pour le moment, ouvert à tous via access_control (voir plus bas)
+
+        # 🔐 Firewall pour la partie admin / gérants
+        main:
+            lazy: true
+            provider: app_user_provider  # Utilise les gérants comme utilisateurs
+            custom_authenticator: App\Security\GerantAuthenticator  # Authentification personnalisée
+            logout:
+                path: app_logout  # 🚪 Route de déconnexion
+                target: app_login  # 🎯 Redirection après déconnexion (vers la page de login)
+
+            # Possibilité d'ajouter d'autres moyens d'authentification ici (ex: form_login, JWT...)
+
+    # 🛡️ Règles d'accès : qui a le droit de faire quoi ?
+    access_control:
+        - { path: ^/api, roles: PUBLIC_ACCESS }  # ✅ Toutes les routes API accessibles sans être connecté (inscription, affichage public)
+        - { path: ^/admin, roles: ROLE_ADMIN }  # 🔐 Accès à /admin réservé aux admins (gérants)
+        # Tu peux ajouter d'autres règles ici (ex: - { path: ^/profile, roles: ROLE_USER })
+
+# ⚙️ Optimisation du hashage des mots de passe en mode test (rapide pour les tests)
+when@test:
+    security:
+        password_hashers:
+            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+                algorithm: auto
+                cost: 4  # ⚡️ Plus rapide en mode test (Bcrypt)
+                time_cost: 3  # ⚡️ Argon : plus rapide pour les tests
+                memory_cost: 10  # ⚡️ Argon : consomme peu de mémoire pour les tests

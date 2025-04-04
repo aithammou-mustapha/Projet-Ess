@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="content">
+
+    <!-- Titre et bouton d'ajout -->
+    <h1>Gestion des Salles</h1>
+
+    <div class="conteneur-bouton-ajouter">
+        <a href="{{ path('admin_salle_add') }}" class="btn-ajouter">Ajouter une Salle</a>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Numéro</th>
+                    <th>Numéro de la Salle</th>
+                    <th>Capacité</th>
+                    <th>Disponibilités</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for salle in salles %}
+                <tr>
+                    <td>{{ salle.id }}</td>
+                    <td>{{ salle.numSalle }}</td>
+                    <td>{{ salle.capaciteSalle }}</td>
+                    <td>
+                        {% if salle.disponibilitesSalle %}
+                            {{ salle.disponibilitesSalle }}
+                        {% else %}
+                            Non spécifié
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('admin_salle_edit', {'id': salle.id}) }}" class="action-icons edit-icon">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+
+                        <a href="{{ path('admin_salle_delete', {'id': salle.id}) }}"
+                           class="action-icons delete-icon btn-supprimer-salle"
+                           data-id="{{ salle.id }}">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- ✅ SweetAlert2 (si pas déjà inclus dans base.html.twig) -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const boutons = document.querySelectorAll('.btn-supprimer-salle');
+
+        boutons.forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                const url = btn.getAttribute('href');
+
+                Swal.fire({
+                    title: 'Confirmer la suppression',
+                    text: 'Êtes-vous sûr de vouloir supprimer cette salle ?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Oui, supprimer',
+                    cancelButtonText: 'Annuler'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

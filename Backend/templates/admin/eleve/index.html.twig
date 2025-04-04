@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="content">
+
+    <!-- Titre et bouton -->
+    <h1>Gestion des Élèves</h1>
+
+    <!-- ✅ Formulaire de recherche -->
+    <form method="get" class="filter-form">
+        <input type="text" name="eleve" placeholder="Nom ou Prénom de l'élève" value="{{ app.request.get('eleve') }}">
+        
+        <select name="niveau">
+            <option value="">Tous niveaux</option>
+            {% for niv in niveaux %}
+                <option value="{{ niv }}" {% if app.request.get('niveau') == niv %}selected{% endif %}>{{ niv }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="groupe">
+            <option value="">Tous groupes</option>
+            {% for groupe in groupes %}
+                <option value="{{ groupe }}" {% if app.request.get('groupe') == groupe %}selected{% endif %}>{{ groupe }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" class="btn btn-primary">Chercher</button>
+    </form>
+
+    <div class="conteneur-bouton-ajouter">
+        <a href="{{ path('admin_eleve_add') }}" class="btn-ajouter">Ajouter un Élève</a>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Numéro</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Niveau</th>
+                    <th>Établissement scolaire</th>
+                    <th>Téléphone</th>
+                    <th>Centre</th>
+                    <th>Parent</th>
+                    <th>Groupe</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for eleve in eleves %}
+                <tr>
+                    <td>{{ eleve.id }}</td>
+                    <td>{{ eleve.nomEleve }}</td>
+                    <td>{{ eleve.prenomEleve }}</td>
+                    <td>{{ eleve.niveau }}</td>
+                    <td>{{ eleve.etablissementScolaire }}</td>
+                    <td>{{ eleve.telEleve }}</td>
+                    <td>{{ eleve.centre ? eleve.centre.nomCentre : 'N/A' }}</td>
+                    <td>{{ eleve.parent ? eleve.parent.nomParent : 'N/A' }}</td>
+                    <td>
+                        {% if eleve.groupes|length > 0 %}
+                            {% for groupe in eleve.groupes %}
+                                {{ groupe.nomGroupe }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('admin_eleve_edit', {'id': eleve.id}) }}" class="action-icons edit-icon">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                        <a href="{{ path('admin_eleve_delete', {'id': eleve.id}) }}"
+                           class="action-icons delete-icon btn-supprimer-eleve"
+                           data-id="{{ eleve.id }}">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- ✅ SweetAlert2 (si non présent dans base.html.twig) -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const boutons = document.querySelectorAll('.btn-supprimer-eleve');
+
+        boutons.forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                const url = btn.getAttribute('href');
+
+                Swal.fire({
+                    title: 'Confirmer la suppression',
+                    text: 'Êtes-vous sûr de vouloir supprimer cet élève ?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Oui, supprimer',
+                    cancelButtonText: 'Annuler'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

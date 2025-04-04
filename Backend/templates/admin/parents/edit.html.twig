@@ -1,0 +1,195 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Modifier un Parent{% endblock %}
+
+{% block stylesheets %}
+<style>
+/* Conteneur principal */
+.container-ajout {
+    width: 65%;
+    height: 600px; /* Assure la hauteur fixe */
+    margin: auto;
+    padding: 50px;
+    background-color: rgba(255, 176, 154, 0.5);
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centre verticalement */
+    align-items: center; /* Centre horizontalement */
+}
+
+/* Centrer la form-container */
+.form-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Titre */
+.header-ajout {
+    color: #d9534f;
+    font-size: 40px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* Avatar */
+.avatar-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.avatar-img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 3px solid white;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.hidden-file-input {
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Champs de formulaire */
+.form-group-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 55px;
+    align-items: center;
+}
+
+.form-group {
+    flex: 1;
+    margin: 0 15px;
+    display: flex;
+    align-items: center;
+}
+
+.form-group label {
+    width: 35%;
+    font-weight: bold;
+    color: #333;
+    text-transform: uppercase;
+    margin-right: 10px;
+    text-align: right;
+}
+
+.form-group input,
+.form-group select {
+    width: 300px;
+    padding: 14px;
+    border: none;
+    background-color: white;
+    font-size: 16px;
+}
+
+/* Boutons */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.button {
+    background-color: #ff5b5b;
+    color: white;
+    padding: 10px 25px;
+    text-decoration: none;
+    font-size: 20px;
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+    text-transform: uppercase;
+    font-family: "Anton", serif;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
+
+.btn-fermer {
+    background-color: #ff5b5b;
+    text-decoration: none;
+    padding: 10px 25px;
+}
+
+.btn-fermer:hover {
+    background-color: #c9302c;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+	<div class="content">
+		<main>
+			<h1 class="header-ajout">Modifier un Parent</h1>
+
+			<section class="container-ajout">
+				{% for label, messages in app.flashes %}
+					{% for message in messages %}
+						<script>
+							Swal.fire({icon: '{{ label }}', title: '{{ label|capitalize }}', text: '{{ message }}'});
+						</script>
+					{% endfor %}
+				{% endfor %}
+
+				<div class="form-container">
+					{{ form_start(parentsForm) }}
+					<div class="form-group-row">
+						<div class="form-group">
+							<label>{{ form_label(parentsForm.prenomParent) }}</label>
+							{{ form_widget(parentsForm.prenomParent) }}
+						</div>
+						<div class="form-group">
+							<label>{{ form_label(parentsForm.nomParent) }}</label>
+							{{ form_widget(parentsForm.nomParent) }}
+						</div>
+					</div>
+
+					<div class="form-group-row">
+						<div class="form-group">
+							<label>{{ form_label(parentsForm.emailParent) }}</label>
+							{{ form_widget(parentsForm.emailParent) }}
+						</div>
+						<div class="form-group">
+							<label>{{ form_label(parentsForm.telParent) }}</label>
+							{{ form_widget(parentsForm.telParent) }}
+						</div>
+					</div>
+
+					<div class="form-group-row">
+						<div class="form-group">
+							<label>{{ form_label(parentsForm.adresseParent) }}</label>
+							{{ form_widget(parentsForm.adresseParent) }}
+						</div>
+						<div class="form-group">
+							{# #}
+						</div>
+					</div>
+
+					<div class="button-container">
+						<a href="{{ path('admin_parents_index') }}" class="button btn-fermer">Fermer</a>
+						<button type="submit" class="button btn-modifier">Modifier</button>
+					</div>
+					{{ form_end(parentsForm) }}
+				</div>
+			</section>
+		</main>
+	</div>
+{% endblock %}

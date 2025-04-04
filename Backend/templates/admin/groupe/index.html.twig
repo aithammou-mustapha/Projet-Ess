@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="content">
+    <h1>Gestion des Groupes</h1>
+
+    <form method="get" class="filter-form">
+        <input type="text" name="nomGroupe" placeholder="Nom de groupe" value="{{ app.request.get('nomGroupe') }}">
+
+        <select name="niveau">
+            <option value="">Tous niveaux</option>
+            {% for niv in niveaux %}
+                <option value="{{ niv }}" {% if app.request.get('niveau') == niv %}selected{% endif %}>{{ niv }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="typeGroupe">
+            <option value="">Tous types de groupe</option>
+            {% for type in typesGroupes %}
+                <option value="{{ type }}" {% if app.request.get('typeGroupe') == type %}selected{% endif %}>{{ type }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" class="btn btn-primary">Chercher</button>
+    </form>
+
+    <div class="conteneur-bouton-ajouter">
+        <a href="{{ path('admin_groupe_add') }}" class="btn-ajouter">Ajouter un Groupe</a>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Numéro</th>
+                    <th>Nom</th>
+                    <th>Type</th>
+                    <th>Niveau</th>
+                    <th>Capacité</th>
+                    <th>Salle</th>
+                    <th>Professeur</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for groupe in groupes %}
+                <tr>
+                    <td>{{ groupe.id }}</td>
+                    <td>{{ groupe.nomGroupe }}</td>
+                    <td>{{ groupe.typeGroupe }}</td>
+                    <td>{{ groupe.niveauGroupe }}</td>
+                    <td>{{ groupe.capaciteGroupe }}</td>
+                    <td>{{ groupe.salle.numSalle }}</td>
+                    <td>{{ groupe.prof.nomProf }} {{ groupe.prof.prenomProf }}</td>
+                    <td>
+                        <a href="{{ path('admin_groupe_edit', {'id': groupe.id}) }}" class="action-icons edit-icon">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                        <a href="{{ path('admin_groupe_delete', {'id': groupe.id}) }}"
+                           class="action-icons delete-icon btn-supprimer-groupe"
+                           data-id="{{ groupe.id }}">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ✅ SweetAlert2 (à inclure si pas dans base.html.twig) -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const boutons = document.querySelectorAll('.btn-supprimer-groupe');
+
+        boutons.forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                const url = btn.getAttribute('href');
+
+                Swal.fire({
+                    title: 'Confirmer la suppression',
+                    text: 'Êtes-vous sûr de vouloir supprimer ce groupe ?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Oui, supprimer',
+                    cancelButtonText: 'Annuler'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="content">
+
+    <!-- Titre et bouton d'ajout -->
+    <h1>Gestion des Centres</h1>
+
+    <div class="conteneur-bouton-ajouter">
+        <a href="{{ path('admin_centre_add') }}" class="btn-ajouter">Ajouter un Centre</a>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Numéro</th>
+                    <th>Nom du Centre</th>
+                    <th>Nombre d'Inscrits</th>
+                    <th>Gérant</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for centre in centres %}
+                <tr>
+                    <td>{{ centre.id }}</td>
+                    <td>{{ centre.nomCentre }}</td>
+                    <td>{{ centre.nbInscrits }}</td>
+                    <td>
+                        {% if centre.gerant %}
+                            {{ centre.gerant.nomGerant }} {{ centre.gerant.prenomGerant }}
+                        {% else %}
+                            Aucun gérant
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('admin_centre_edit', {'id': centre.id}) }}" class="action-icons edit-icon">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+
+                        <a href="{{ path('admin_centre_delete', {'id': centre.id}) }}" 
+                           class="action-icons delete-icon btn-supprimer-centre"
+                           data-id="{{ centre.id }}">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- ✅ SweetAlert2 (si non inclus dans base.html.twig) -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const boutons = document.querySelectorAll('.btn-supprimer-centre');
+
+        boutons.forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                const url = btn.getAttribute('href');
+
+                Swal.fire({
+                    title: 'Confirmer la suppression',
+                    text: 'Êtes-vous sûr de vouloir supprimer ce centre ?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Oui, supprimer',
+                    cancelButtonText: 'Annuler'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

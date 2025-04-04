@@ -1,0 +1,10 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: 'Mon API'
+            description: 'Documentation de mon API avec Swagger'
+            version: '1.0.0'
+    areas:
+        path_patterns:
+            - ^/api(?!/doc$)  # Inclut toutes les routes API sauf /api/doc
+

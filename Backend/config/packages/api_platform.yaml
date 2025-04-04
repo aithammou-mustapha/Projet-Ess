@@ -1,0 +1,22 @@
+api_platform:
+    title: 'Hello API Platform'
+    description: 'Documentation de mon API'
+    version: '1.0.0'
+    enable_docs: true
+    enable_entrypoint: true
+    enable_swagger: true
+    enable_swagger_ui: true
+    enable_re_doc: true
+    formats:
+        jsonld:  ['application/ld+json']
+        json:    ['application/json']
+        html:    ['text/html']
+        yaml:    ['application/x-yaml']
+        jsonopenapi: ['application/vnd.oai.openapi+json']
+        yamlopenapi: ['application/vnd.oai.openapi']
+    mapping:
+        paths:
+            - '%kernel.project_dir%/src/Entity'
+
+
+            

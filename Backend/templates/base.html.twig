@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Tableau de Bord{% endblock %} - Excellence Soutien Solaire</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Feuilles de styles -->
+        {# <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}"> #}
+        {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/footer.css') }}">
+
+        <!-- Feuilles JS -->
+        <script src="{{ asset('assets/js/scripts.js') }}" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        {% block javascripts %}
+            {# <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            Swal.fire({
+                                icon: '{{ label }}',
+                                title: '{{ label|capitalize }}',
+                                text: '{{ message }}',
+                                timer: 3000,
+                                showConfirmButton: false
+                            });
+                        {% endfor %}
+                    {% endfor %}
+                });
+            </script> #}
+            <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let errorMessages = [];
+        
+        {% for label, messages in app.flashes %}
+            {% if label == 'error' %}
+                {% for message in messages %}
+                    errorMessages.push("{{ message|escape('js') }}");
+                {% endfor %}
+            {% else %}
+                {% for message in messages %}
+                    Swal.fire({
+                        icon: '{{ label }}',
+                        title: '{{ label|capitalize }}',
+                        text: '{{ message }}',
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+
+        // Afficher les erreurs dans l'ordre
+        if (errorMessages.length > 0) {
+            let fullMessage = errorMessages.join("\n\n");
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreurs',
+                html: fullMessage.replace(/\n/g, '<br>'), 
+                timer: 5000,
+                showConfirmButton: true
+            });
+        }
+    });
+</script>
+
+        {% endblock %}
+    </head>
+    <body>
+        {% include "_partials/_nav.html.twig" %}
+
+        {# {% include "_partials/_flash.html.twig" %} #}
+
+        {% block body %}{% endblock %}
+
+        {% include "_partials/_footer.html.twig" %}
+    </body>
+</html>

@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="content">
+
+    <!-- Titre et bouton -->
+    <h1>Gestion des Managers</h1>
+
+    <div class="conteneur-bouton-ajouter">
+        <a href="{{ path('admin_gerant_add') }}" class="btn-ajouter">Ajouter un Manager</a>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Numéro</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Centre</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for gerant in gerants %}
+                <tr>
+                    <td>{{ gerant.id }}</td>
+                    <td>{{ gerant.nomGerant }} {{ gerant.prenomGerant }}</td>
+                    <td>{{ gerant.emailGerant }}</td>
+                    <td>
+                        {% if gerant.centres is not empty %}
+                            {% for centre in gerant.centres %}
+                                {{ centre.nomCentre }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            Aucun centre
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('admin_gerant_edit', {'id': gerant.id}) }}" class="action-icons edit-icon">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+
+                        <a href="{{ path('admin_gerant_delete', {'id': gerant.id}) }}" 
+                           class="action-icons delete-icon btn-supprimer-gerant"
+                           data-id="{{ gerant.id }}">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const boutonsSupprimer = document.querySelectorAll('.btn-supprimer-gerant');
+
+        boutonsSupprimer.forEach(function (bouton) {
+            bouton.addEventListener('click', function (e) {
+                e.preventDefault();
+                const url = bouton.getAttribute('href');
+
+                Swal.fire({
+                    title: 'Confirmer la suppression',
+                    text: "Êtes-vous sûr de vouloir supprimer ce manager ?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Oui, supprimer',
+                    cancelButtonText: 'Annuler'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}
