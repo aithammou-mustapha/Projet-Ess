@@ -1,0 +1,265 @@
+/* 🌐 CONTAINER GLOBAL */
+.boite-connexion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 80px;
+    max-width: 1400px;
+    margin: auto;
+    margin-top: 200px;
+  }
+  
+  /* 📝 FORMULAIRE */
+  .formulaire-connexion {
+    background: white;
+    padding: 70px 60px;
+    border-radius: 30px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    height: 645px;
+    position: relative;
+  }
+  
+  /* ✅ IMAGE DROITE ACTIVE SEULEMENT À L'ÉTAPE 1 */
+  .image-droite-connexion {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: -20px;
+    width: 450px;
+    height: 645px;
+    flex-shrink: 0;
+    transition: all 0.5s ease;
+  }
+  
+  /* ✅ Fond rouge arrondi */
+  .image-droite-connexion::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #ff6161;
+    border-radius: 40px;
+    z-index: 0;
+    transition: all 0.5s ease;
+  }
+  
+  /* ✅ Image enfant */
+  .image-droite-connexion img {
+    width: 547px;
+    left: 2px;
+    z-index: 2;
+    margin-bottom: 135px;
+    margin-right: 80px;
+    transition: all 0.5s ease;
+  }
+  
+  
+  /* ✅ TITRE PRINCIPAL */
+  .formulaire-connexion h1 {
+    font-family: 'Anton', sans-serif;
+    font-size: 3.5rem;
+    margin-bottom: 40px;
+    color: black;
+    text-align: center;
+  }
+
+  .sous-titre-role {
+    text-align: center;
+    font-size: 0.95rem;
+    font-family: 'Poppins', sans-serif;
+    margin-top: -20px;
+    margin-bottom: 30px;
+    color: #444;
+  }
+  
+  
+  /* ✅ Labels */
+  label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+  }
+  
+  /* ✅ Inputs */
+  input, select {
+    width: 100%;
+    padding: 18px 22px;
+    margin-bottom: 22px;
+    border: none;
+    background: #f5c2c2;
+    color: #333;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  
+  input:focus, select:focus {
+    background: #fde8e8;
+    border: none;
+  }
+  
+  /* ✅ Bouton connexion */
+  .bouton-connexion1 {
+    display: block;         /* Permet de centrer */
+    margin: 20px auto 0;    /* Centrage horizontal */
+    width: 50%;
+    padding: 18px;
+    background: #ff6161;
+    color: white;
+    border: none;
+    border-radius: 40px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+  }
+  
+  
+  .bouton-connexion1:hover {
+    background: #e55b5b;
+  }
+  
+  /* ✅ Bouton Retour */
+  .bouton-retour {
+    background: none;
+    border: none;
+    color: #ff6161;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-bottom: 30px;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    display: inline-block;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  
+  .bouton-retour:hover {
+    text-decoration: underline;
+  }
+  
+  /* ✅ Choix rôle radio */
+  .choix-role-radio {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 35px;
+  }
+  
+  /* ✅ Radio stylisé */
+  .choix-role-radio label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 18px 20px;
+    border: 2px solid #f3c1c1;
+    background: #f3c1c1;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    border-radius: 0;
+    box-shadow: none;
+    position: relative;
+  }
+  
+  .choix-role-radio label.actif {
+    background: #ff6161;
+    color: white;
+    border-color: #ff6161;
+  }
+  
+  .choix-role-radio label::before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid white;
+    margin-right: 8px;
+  }
+  
+  .choix-role-radio label.actif::before {
+    background: white;
+    box-shadow: inset 0 0 0 4px #ff6161;
+  }
+  
+  /* ✅ Cacher radio natif */
+  .choix-role-radio input[type="radio"] {
+    display: none;
+  }
+  
+  
+  /* ✅ Texte de bas de formulaire : lien vers Connexion */
+  .lien-connexion {
+    margin-top: 40px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  /* ✅ Lien cliquable */
+  .lien-connexion a {
+    color: #ff6161;
+    font-weight: 500;
+    text-decoration: none;
+    margin-left: 4px;
+    transition: color 0.2s ease;
+  }
+  
+  .lien-connexion a:hover {
+    text-decoration: underline;
+    color: #e44d4d;
+  }
+  
+  
+  /* ✅ RESPONSIVE */
+  @media (max-width: 1200px) {
+    .boite-connexion {
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 20px;
+    }
+  
+    .formulaire-connexion {
+      padding: 50px 40px;
+    }
+  
+    .choix-role-radio {
+      flex-direction: column;
+      gap: 15px;
+    }
+  
+    .choix-role-radio label {
+      padding: 15px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .formulaire-connexion h1 {
+      font-size: 2.8rem;
+    }
+  
+    input, select {
+      padding: 15px 18px;
+      font-size: 0.95rem;
+    }
+  
+    .bouton-connexion {
+      font-size: 1rem;
+    }
+  }
+  

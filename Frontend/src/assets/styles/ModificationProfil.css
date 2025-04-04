@@ -1,0 +1,131 @@
+/* 🌐 CONTAINER GLOBAL */
+.boite-modification {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 80px;
+    max-width: 1400px;
+    margin: auto;
+    margin-top: 200px;
+  }
+  
+  /* 📝 FORMULAIRE */
+  .formulaire-modification {
+    background: white;
+    padding: 70px 60px 40px; /* réduit le padding bas */
+    border-radius: 30px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* ✅ TITRE PRINCIPAL */
+  .formulaire-modification h1 {
+    font-family: 'Anton', sans-serif;
+    font-size: 3.5rem;
+    margin-bottom: 40px;
+    color: black;
+    text-align: center;
+  }
+  
+  /* ✅ Labels */
+  label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+  }
+  
+  /* ✅ Inputs */
+  input {
+    width: 100%;
+    padding: 18px 22px;
+    margin-bottom: 22px;
+    border: none;
+    background: #f5c2c2;
+    color: #333;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  
+  input:focus {
+    background: #fde8e8;
+  }
+  
+  /* ✅ Bouton Valider */
+  .bouton-modification {
+    display: block;
+    margin: 10px auto 0;
+    width: 100%;
+    padding: 18px;
+    background: #ff6161;
+    color: white;
+    border: none;
+    border-radius: 40px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+  }
+  
+  .bouton-modification:hover {
+    background: #e55b5b;
+  }
+  
+  /* ✅ Bouton Retour */
+  .bouton-retour {
+    background: none;
+    border: none;
+    color: #ff6161;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-bottom: 30px;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    display: inline-block;
+    transition: all 0.2s;
+    text-decoration: none;
+    text-align: left;
+  }
+  
+  .bouton-retour:hover {
+    text-decoration: none;
+  }
+  
+  /* ✅ Responsive */
+  @media (max-width: 1200px) {
+    .boite-modification {
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 20px;
+    }
+  
+    .formulaire-modification {
+      padding: 50px 40px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .formulaire-modification h1 {
+      font-size: 2.8rem;
+    }
+  
+    input {
+      padding: 15px 18px;
+      font-size: 0.95rem;
+    }
+  
+    .bouton-modification {
+      font-size: 1rem;
+    }
+  }
+  

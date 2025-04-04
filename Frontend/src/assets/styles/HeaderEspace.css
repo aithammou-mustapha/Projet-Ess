@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* ✅ Barre de navigation */
+.barre-navigation {
+    font-family: "Anton", sans-serif;
+    background: #ff6161;
+    color: white;
+    padding: 15px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  /* ✅ Logo */
+  .logo img {
+    height: 70px;
+  }
+  
+  /* ✅ Liens de navigation */
+  .liens-navigation {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+    align-items: center;
+    margin: 0 auto;
+  }
+  
+  .liens-navigation li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+  
+  /* ✅ Section droite : bouton + panier + profil */
+  .actions-droite {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  /* ✅ Bouton tableau de bord */
+  .bouton-connexion {
+    padding: 10px 25px;
+    background: white;
+    color: #ff6161;
+    border-radius: 50px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: 'Anton', sans-serif;
+}
+  
+
+  /* ✅ Icône de profil */
+  .profil-container {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .profil-icone {
+    height: 45px;
+    width: 45px;
+    margin-left: 10px;
+    object-fit: cover;
+    cursor: pointer;
+
+  }
+  
+  /* ✅ Menu déroulant profil */
+  .menu-profil {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: white;
+    color: #333;
+    border-radius: 10px;
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 1001;
+    min-width: 180px;
+  }
+  
+  .menu-profil a,
+  .menu-profil button {
+    text-align: left;
+    text-decoration: none;
+    font-size: 0.95rem;
+    color: #333333;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    transition: all 0.2s ease;
+    font-family: 'Anton', sans-serif;
+
+  }
+  
+  .menu-profil a:hover,
+  .menu-profil button:hover {
+    background-color: #f5f5f5;
+    border-radius: 5px;
+  }
+  
+
+
+  .form-container {
+    max-width: 500px;
+    margin: 50px auto;
+    background: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  
+  .form-container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .form-container input {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .form-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #34495e;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .btn-retour {
+    margin-top: 20px;
+    background-color: #ccc;
+    color: #222;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .btn-retour:hover {
+    background-color: #bbb;
+  }
+  

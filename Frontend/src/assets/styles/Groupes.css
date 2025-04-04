@@ -1,0 +1,94 @@
+/* SECTION */
+.section-groupes {
+    padding: 60px 20px;
+    text-align: center;
+  }
+  
+  .section-groupes h2 {
+    margin-bottom: 30px;
+    font-size: 3rem;
+    color: #ff6161;
+    font-family: 'Anton', sans-serif;
+    position: relative;
+  }
+
+  .section-groupes h2::after {
+    content: "";
+    position: absolute;
+    width: 200px;
+    height: 4px;
+    background: #ff6161;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -15px;
+}
+  
+  /* SLIDER */
+  .slider-groupes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  /* CONTENEUR DES CARTES */
+  .container-cartes {
+    display: flex;
+    gap: 20px;
+    width: calc(280px * 4 + 60px); /* 4 cartes + espace */
+    overflow: hidden;
+  }
+  
+  /* CARTE */
+  .carte-groupe {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 280px;
+    padding: 15px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .carte-groupe img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 15px;
+  }
+  
+  .carte-groupe button {
+    padding: 10px;
+    background: #ff6161;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: auto;
+    font-weight: bold;
+  }
+  
+  /* NAVIGATION */
+  .btn-nav {
+    background: #ff6161;
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  /* MESSAGE ERREUR */
+  .erreur {
+    color: red;
+    margin: 20px 0;
+    font-weight: bold;
+  }
+  
